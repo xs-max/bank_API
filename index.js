@@ -2,9 +2,7 @@ const dotenv = require("dotenv");
 const mongoose = require("mongoose");
 const app = require("./app");
 
-dotenv.config({
-  path: "./config.env",
-});
+dotenv.config();
 
 const DB = process.env.DATABASE_URL;
 

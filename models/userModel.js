@@ -1,5 +1,6 @@
 const mongoose = require('mongoose');
 const validator = require("validator");
+const { createAccountNumber } = require('../utils/helper');
 
 const userSchema = new mongoose.Schema({
     fullName: {
@@ -31,13 +32,13 @@ const userSchema = new mongoose.Schema({
             message: 'Passwords don\'t match'
         }
     },
-    photo: {
-        type: String,
-    },
     role: {
         type: String,
-        enum: ['user', 'vendor', 'admin'],
+        enum: ['admin', 'user'],
         default: 'user'
+    },
+    accountNumber: {
+        type: String,
     },
     phone: {
         type: String,
@@ -55,11 +56,6 @@ const userSchema = new mongoose.Schema({
             message: 'Enter a valid phone number'
         }
     },
-    status: {
-        type: String,
-        default: 'offline',
-        enum: ['online', 'offline']
-    },
     passwordChangedAt: Date,
     passwordResetToken: String,
     passwordResetExpires: Date,
@@ -70,6 +66,8 @@ const userSchema = new mongoose.Schema({
 }
 )
 
-const User = mongoose.model('User', userSchema);
+userSchema.pre(/^save/, function() {
+    this.accountNumber = createAccountNumber();
+})
 
-module.export = User;
+module.exports = mongoose.model("user", userSchema);
