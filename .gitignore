@@ -1,5 +1,2 @@
-#node modules
 node_modules/
-
-#env
-config.env
+*.env
