@@ -66,8 +66,9 @@ const userSchema = new mongoose.Schema({
 }
 )
 
-userSchema.pre(/^save/, function() {
+userSchema.pre(/^save/, function(next) {
     this.accountNumber = createAccountNumber();
+    next();
 })
 
 module.exports = mongoose.model("user", userSchema);
