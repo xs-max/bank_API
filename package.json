@@ -1,0 +1,22 @@
+{
+  "name": "centralbank",
+  "version": "1.0.0",
+  "description": "An api for bank services",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/xs-max/CB_Genesys_API.git"
+  },
+  "author": "Godwin Ogbuji",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/xs-max/CB_Genesys_API/issues"
+  },
+  "homepage": "https://github.com/xs-max/CB_Genesys_API#readme",
+  "dependencies": {
+    "express": "^4.17.1"
+  }
+}
