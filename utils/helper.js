@@ -9,3 +9,13 @@ exports.createAccountNumber = () => {
     }
     return accountNumber;
 }
+
+exports.createTransactionID = () => {
+  const characters = "abcdefghijklmnopqrstuvwxyz12345567890";
+  var transactionID = "";
+  for (i = 0; i < 30; i++) {
+    var randomChar = characters.charAt(Math.floor(Math.random() * characters.length));
+    transactionID += randomChar;
+  }
+  return transactionID;
+}
