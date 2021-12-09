@@ -4,6 +4,7 @@ const transactionSchema = new mongoose.Schema(
   {
     transactionId: {
       type: String,
+      unique: true
     },
     user: {
       type: mongoose.Schema.ObjectId,
@@ -23,6 +24,7 @@ const transactionSchema = new mongoose.Schema(
         type: String,
         minlength: [3, 'A receiver name must be more than three(3) characters']
     },
+    createdAt: String
 
   },
   {
@@ -30,5 +32,10 @@ const transactionSchema = new mongoose.Schema(
     toObject: { virtuals: true },
   }
 );
+
+transactionSchema.pre("save", function (next) {
+  this.createdAt = Date.now();
+  next();
+});
 
 module.exports = mongoose.model("Transaction", transactionSchema);
