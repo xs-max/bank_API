@@ -83,6 +83,10 @@ const userSchema = new mongoose.Schema(
         message: "Enter a valid phone number",
       },
     },
+    disable: {
+        type: Boolean,
+        default: false
+    },
     passwordChangedAt: Date,
     passwordResetToken: String,
     passwordResetExpires: Date,
