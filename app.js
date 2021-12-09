@@ -3,6 +3,7 @@ const morgan = require("morgan");
 
 const globalErrorHandler = require('./controllers/errorHandler');
 const userRouter = require('./routes/userRoute');
+const transactionRouter = require('./routes/transactionRoute');
 
 const app = express();
 
@@ -14,6 +15,7 @@ if (process.env.NODE_ENV === "development") {
 }
 
 app.use('/api/users', userRouter);
+app.use('/api/transactions', transactionRouter);
 
 // Handling unavailable routes
 app.all("*", (req, res, next) => {

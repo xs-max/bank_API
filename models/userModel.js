@@ -43,10 +43,11 @@ const userSchema = new mongoose.Schema(
       type: String,
       unique: true,
     },
-    accountType: {
+    typeOfAccount: {
       type: String,
       required: [true, 'A user should have an account type'],
-      enum: ['savings', 'current']
+      enum: ['savings', 'current'],
+      default: 'savings'
     },
     balance: {
       type: Number,
