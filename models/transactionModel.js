@@ -1,4 +1,5 @@
 const mongoose = require("mongoose");
+const { createTransactionID } = require("../utils/helper");
 
 const transactionSchema = new mongoose.Schema(
   {
@@ -17,13 +18,13 @@ const transactionSchema = new mongoose.Schema(
     },
     amount: {
         type: Number,
-        required: [true, 'A transaction should have an amount'],
-        min: [100, 'Amount must be more than 100']
+        required: [true, 'A transaction should have an amount']
     },
     receiver: {
         type: String,
         minlength: [3, 'A receiver name must be more than three(3) characters']
-    },
+    },balance: Number,
+    description: String,
     createdAt: String
 
   },
@@ -34,8 +35,10 @@ const transactionSchema = new mongoose.Schema(
 );
 
 transactionSchema.pre("save", function (next) {
-  this.createdAt = Date.now();
-  next();
+    const timestamp = Date.now();
+    this.createdAt = new Date(timestamp).toLocaleString();
+    this.transactionId = createTransactionID();
+    next();
 });
 
 module.exports = mongoose.model("Transaction", transactionSchema);

@@ -1,9 +1,12 @@
 const express = require("express");
-const {createTransaction} = require('./../controllers/transactionController');
+const { protect } = require("../controllers/authController");
+const {createTransaction, deposit} = require('./../controllers/transactionController');
 
 const router = express.Router();
 
-router.post('/', createTransaction)
+router.use(protect)
+
+router.post('/deposit', deposit);
 
 
 module.exports = router;
