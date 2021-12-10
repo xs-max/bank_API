@@ -14,16 +14,14 @@ const transactionSchema = new mongoose.Schema(
     transactionType: {
         type: String,
         required: [true, "A transaction should have a transaction type"],
-        enum: ['withdrawal', 'deposit', 'transfer']
+        enum: ['withdrawal', 'deposit', 'transfer', 'credit']
     },
     amount: {
         type: Number,
         required: [true, 'A transaction should have an amount']
     },
-    receiver: {
-        type: String,
-        minlength: [3, 'A receiver name must be more than three(3) characters']
-    },balance: Number,
+    receiver: String,
+    balance: Number,
     description: String,
     createdAt: String
 
