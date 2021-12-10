@@ -16,7 +16,6 @@ exports.disableUser = catchAsync(async (req, res, next) => {
       { disable: true },
       {
         new: true,
-        runValidators: true,
       }
     );
 
@@ -27,6 +26,25 @@ exports.disableUser = catchAsync(async (req, res, next) => {
       }
     });
 });
+
+exports.activateUser = catchAsync(async (req, res, next) => {
+    const user = await User.findById(req.params.id);
+    if (!user) return next(new AppError("User does not exist", 404));
+    const updatedUser = await User.findByIdAndUpdate(
+      user._id,
+      { disable: false },
+      {
+        new: true,
+      }
+    );
+
+    res.status(200).json({
+      status: "success",
+      data: {
+        message: `${updatedUser.fullName}'s account activated successfully`,
+      },
+    });
+})
 exports.createUser = createOne(User);
 
 exports.getAllUsers = getAll(User);

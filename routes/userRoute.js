@@ -1,5 +1,5 @@
 const express = require('express')
-const {createUser, getAllUsers, getMe, getUser, updateUser, deleteUser, disableUser} = require('../controllers/userController');
+const {createUser, getAllUsers, getMe, getUser, updateUser, deleteUser, disableUser, activateUser} = require('../controllers/userController');
 const {protect, restrictTo, login, updatePassword} = require('../controllers/authController');
 
 
@@ -25,5 +25,7 @@ router.route('/:id')
     .delete(deleteUser)
 
 router.patch('/:id/disable', disableUser);
+router.patch("/:id/activate", activateUser);
+
 
 module.exports = router;
