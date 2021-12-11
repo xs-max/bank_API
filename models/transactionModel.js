@@ -1,11 +1,9 @@
 const mongoose = require("mongoose");
-const { createTransactionID } = require("../utils/helper");
 
 const transactionSchema = new mongoose.Schema(
   {
     transactionId: {
       type: String,
-      unique: true
     },
     user: {
       type: mongoose.Schema.ObjectId,
@@ -20,9 +18,11 @@ const transactionSchema = new mongoose.Schema(
         type: Number,
         required: [true, 'A transaction should have an amount']
     },
+    sender: String,
     receiver: String,
     balance: Number,
     description: String,
+    status: String,
     createdAt: String
 
   },
@@ -35,7 +35,6 @@ const transactionSchema = new mongoose.Schema(
 transactionSchema.pre("save", function (next) {
     const timestamp = Date.now();
     this.createdAt = new Date(timestamp).toLocaleString();
-    this.transactionId = createTransactionID();
     next();
 });
 
