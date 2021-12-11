@@ -13,13 +13,6 @@ const User = require("../models/userModel");
 exports.createTransaction = createOne(Transaction);
 
 exports.deposit = catchAsync( async (req, res, next) => {
-  // checking if the sender's account is disabled
-
-  if(prevUser.disable) return next(new AppError("This account has been disabled, please contact your account manager", 403));
-
-    // checking if amount is more than or equal to minimum amount
-
-    if(req.body.amount < 100) return next(new AppError("The minimum amount for deposit is 100", 403));
     const user = req.user._id;
     const prevUser = await User.findById(user);
 
@@ -34,13 +27,6 @@ exports.deposit = catchAsync( async (req, res, next) => {
 });
 
 exports.withdraw = catchAsync(async (req, res, next) => {
-  // checking if the sender's account is disabled
-
-  if (prevUser.disable)return next(new AppError("This account has been disabled, please contact your account manager",403));
-
-    // checking if amount is more than or equal to minimum amount
-
-    if (req.body.amount < 100) return next(new AppError("The minimum amount for withdrawal is 100", 403));
     const user = req.user._id;
     const prevUser = await User.findById(user);
 
@@ -55,14 +41,6 @@ exports.withdraw = catchAsync(async (req, res, next) => {
 });
 
 exports.transferFunds = catchAsync(async (req, res, next) => {
-  // checking if the sender's account is disabled
-
-  if (sender.disable)return next(new AppError("This account has been disabled, please contact your account manager",403));
-  
-    // checking if amount is more than or equal to minimum amount
-
-    if (req.body.amount < 100)return next(new AppError("The minimum amount for transfer is 100", 403));
-
     // checking if there is no description
     if(!req.body.description) return next(new AppError("Every transfer should have a description", 403));
     const user = req.user._id;
@@ -91,4 +69,5 @@ exports.transferFunds = catchAsync(async (req, res, next) => {
 
 exports.getAllTransactions = catchAsync(async (req, res, next) => {
 
+  
 });
