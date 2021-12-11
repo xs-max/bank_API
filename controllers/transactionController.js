@@ -106,6 +106,8 @@ exports.getAllTransactions = catchAsync(async (req, res, next) => {
   const user = req.user._id;
   const transactions = await Transaction.find({user}).select('-user');
 
+  if(!transactions) return next(new AppError("No transaction found for this account", 404));
+
   res.status(200).json({
     status: "success",
     results: transactions.length,
@@ -115,10 +117,39 @@ exports.getAllTransactions = catchAsync(async (req, res, next) => {
   });
 });
 
-// exports.reverseTransfer = catchAsync(async (req, res, next) => {
-//   const transactionID = req.params.transactionID;
-//   const transaction = await Transaction.findOne({transactionID});
-//   if(!transaction) return next(new AppError("There is no transaction with such ID", 404));
-//   const user = await User.findById(transaction.user);
-//   await 
-// })
+exports.reverseTransfer = catchAsync(async (req, res, next) => {
+  const transactionId = req.params.transactionID;
+  const transaction = await Transaction.findOne({transactionId});
+
+  // checking if the transaction exists
+  if(!transaction) return next(new AppError("There is no transaction with such ID", 404));
+
+  // checking if the transaction was previously reversed
+  if(transaction.status == 'canceled') return next(new AppError("This transaction is already reversed", 404));
+
+  // checking if the type of transaction was a transfer
+  if(transaction.transactionType != 'transfer') return next(new AppError("This transaction was not a transfer", 404));
+
+  const user = transaction.user;
+  const amount = transaction.amount;
+  const receiverAcc = transaction.receiver;
+
+  // Giving the sender back their money
+  const sender = await User.findById(user);
+  await User.findByIdAndUpdate(user, {balance: sender.balance + amount}, { new: true });
+
+  // taking the money from the receiver
+  const receiver = await User.findOne({accountNumber: receiverAcc});
+  await User.findByIdAndUpdate(receiver._id, {balance: receiver.balance - amount}, { new: true });
+
+  // cancelling the transaction
+  await Transaction.updateMany({transactionId}, {status: 'canceled'}, { new: true });
+
+  res.status(200).json({
+    status: "success",
+    data: {
+      message: 'Transaction reversed successfully',
+    },
+  });
+
+})

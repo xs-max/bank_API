@@ -14,3 +14,9 @@ exports.isActive = catchAsync(async (req, res, next) => {
     if(disable) return next(new AppError("This account has been disabled, please contact your account manager",403))
     next();
 })
+
+exports.checkBalance = catchAsync(async (req, res, next) => {
+    const {balance} = await User.findById(req.user._id);
+    if(balance <  req.body.amount) return next(new AppError("Your account has an insufficient balance for this transaction ",403))
+    next();
+})
