@@ -1,5 +1,5 @@
 const express = require("express");
-const { protect } = require("../controllers/authController");
+const { protect, restrictTo } = require("../middlewares/authMiddleware");
 const {createTransaction, deposit, withdraw, transferFunds} = require('./../controllers/transactionController');
 
 const router = express.Router();

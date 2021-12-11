@@ -13,15 +13,16 @@ const User = require("../models/userModel");
 exports.createTransaction = createOne(Transaction);
 
 exports.deposit = catchAsync( async (req, res, next) => {
+  // checking if the sender's account is disabled
+
+  if(prevUser.disable) return next(new AppError("This account has been disabled, please contact your account manager", 403));
+
     // checking if amount is more than or equal to minimum amount
 
     if(req.body.amount < 100) return next(new AppError("The minimum amount for deposit is 100", 403));
     const user = req.user._id;
     const prevUser = await User.findById(user);
 
-    // checking if the sender's account is disabled
-
-    if(prevUser.disable) return next(new AppError("This account has been disabled, please contact your account manager", 403))
     const balance = prevUser.balance + req.body.amount
     await User.findByIdAndUpdate(user, { balance },{new: true});
     const doc = await new Transaction({...req.body, transactionType: "deposit", user, balance}).save();
@@ -33,15 +34,16 @@ exports.deposit = catchAsync( async (req, res, next) => {
 });
 
 exports.withdraw = catchAsync(async (req, res, next) => {
+  // checking if the sender's account is disabled
+
+  if (prevUser.disable)return next(new AppError("This account has been disabled, please contact your account manager",403));
+
     // checking if amount is more than or equal to minimum amount
 
     if (req.body.amount < 100) return next(new AppError("The minimum amount for withdrawal is 100", 403));
     const user = req.user._id;
     const prevUser = await User.findById(user);
 
-    // checking if the sender's account is disabled
-
-    if (prevUser.disable)return next(new AppError("This account has been disabled, please contact your account manager",403));
     const balance = prevUser.balance - req.body.amount;
     await User.findByIdAndUpdate(user, { balance }, { new: true });
     const doc = await new Transaction({ ...req.body,transactionType: "withdrawal", user, balance }).save();
@@ -53,6 +55,10 @@ exports.withdraw = catchAsync(async (req, res, next) => {
 });
 
 exports.transferFunds = catchAsync(async (req, res, next) => {
+  // checking if the sender's account is disabled
+
+  if (sender.disable)return next(new AppError("This account has been disabled, please contact your account manager",403));
+  
     // checking if amount is more than or equal to minimum amount
 
     if (req.body.amount < 100)return next(new AppError("The minimum amount for transfer is 100", 403));
@@ -62,9 +68,6 @@ exports.transferFunds = catchAsync(async (req, res, next) => {
     const user = req.user._id;
     const sender = await User.findById(user);
 
-    // checking if the sender's account is disabled
-
-    if (sender.disable)return next(new AppError("This account has been disabled, please contact your account manager",403));
     const receiver = await User.findOne({accountNumber: req.body.receiver});
     if(!receiver) return next(new AppError("There is no user with that account Number", 404));
     const senderBalance = sender.balance - req.body.amount;
@@ -84,4 +87,8 @@ exports.transferFunds = catchAsync(async (req, res, next) => {
       status: "success",
       data: doc,
     });
+});
+
+exports.getAllTransactions = catchAsync(async (req, res, next) => {
+
 });
