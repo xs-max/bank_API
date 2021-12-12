@@ -10,14 +10,14 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/xs-max/CB_Genesys_API.git"
+    "url": "git+https://github.com/xs-max/bank_API.git"
   },
   "author": "Godwin Ogbuji",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/xs-max/CB_Genesys_API/issues"
+    "url": "https://github.com/xs-max/bank_API/issues"
   },
-  "homepage": "https://github.com/xs-max/CB_Genesys_API#readme",
+  "homepage": "https://github.com/xs-max/bank_API#readme",
   "dependencies": {
     "bcryptjs": "^2.4.3",
     "dotenv": "^10.0.0",
