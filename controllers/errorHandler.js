@@ -53,7 +53,6 @@ module.exports = (err, req, res, next) => {
   } else if (process.env.NODE_ENV === "production") {
     let error = { ...err };
     error.message = err.message;
-    console.log(error);
     if (error.kind === "ObjectId") error = handleCastErrorDB(error);
     if (error.code == 11000) error = handleDuplicateField(error);
     if (error._message === "Validation failed")
