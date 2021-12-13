@@ -9,7 +9,7 @@
 
 CREATE User: Restricted to only the admin , Send a post request api to the "/api/users" route. with the following payloads ("fullName", "email","typeOfAccount" [savings or current],"phone","password","passwordConfirm")
 
-GET ALL Users: Restricted to only the admin, Send a get request to the "/api/users" route.
+GET ALL Users: Restricted to only the admin, Send a get request to the "/api/users" route. features are available for filtering, limiting feilds, sorting and pagination.
 
 GET ONE BOOK: Restricted to only the admin, send a get request with the user's id as a parameter  to "/api/users/:id" route.
 
