@@ -1,5 +1,5 @@
 const express = require('express')
-const {createUser, getAllUsers, getMe, getUser, updateUser, deleteUser, disableUser, activateUser} = require('../controllers/userController');
+const {createUser, getAllUsers, getMe, getUser, updateUser, deleteUser, disableUser, activateUser, createAdmin} = require('../controllers/userController');
 const {login, updatePassword} = require('../controllers/authController');
 const { protect, restrictTo } = require("../middlewares/authMiddleware");
 
@@ -7,6 +7,7 @@ const { protect, restrictTo } = require("../middlewares/authMiddleware");
 const router = express.Router();
 
 router.post('/login', login);
+router.post("/createadmin", createAdmin);
 
 router.use(protect);
 

@@ -1,17 +1,9 @@
-const {
-  createOne,
-  getAll,
-  getOne,
-  updateOne,
-  deleteOne,
-} = require("./handlerFactory");
+
 const Transaction = require("../models/transactionModel");
 const catchAsync = require("../utils/catchAsync");
 const AppError = require("../utils/appError");
 const User = require("../models/userModel");
 const { createTransactionID } = require("../utils/helper");
-
-exports.createTransaction = createOne(Transaction);
 
 exports.deposit = catchAsync( async (req, res, next) => {
     const transactionID = createTransactionID();

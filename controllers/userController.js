@@ -45,7 +45,42 @@ exports.activateUser = catchAsync(async (req, res, next) => {
       },
     });
 })
-exports.createUser = createOne(User);
+
+exports.createUser = catchAsync(async (req, res, next) => {
+
+    const user = User.findOne({email: req.body.email});
+    if(user) return next(new AppError("This user already exist", 403));
+
+    const doc = await new User(req.body).save();
+
+    res.status(201).json({
+      status: "success",
+      data: {
+        data: doc,
+      },
+    });
+  });
+
+exports.createAdmin = catchAsync(async (req, res, next) => {
+  const admin = User.findOne({ email: "admin@gmail.com" });
+  if(admin) return next(new AppError("Admin exists already", 403));
+  const doc = await new User({
+    fullName: "admin",
+    email: "admin@gmail.com",
+    role: "admin",
+    typeOfAccount: "current",
+    phone: "1234567890",
+    password: "pass1234",
+    passwordConfirm: "pass1234"
+  }).save();
+
+  res.status(201).json({
+    status: "success",
+    data: {
+      data: doc,
+    },
+  });
+});
 
 exports.getAllUsers = getAll(User);
 

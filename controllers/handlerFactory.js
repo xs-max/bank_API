@@ -31,17 +31,7 @@ exports.updateOne = (Model) =>
     });
   });
 
-exports.createOne = (Model) =>
-  catchAsync(async (req, res, next) => {
-    const doc = await new Model(req.body).save();
 
-    res.status(201).json({
-      status: "success",
-      data: {
-        data: doc,
-      },
-    });
-  });
 
 exports.getOne = (Model, popOtions) =>
   catchAsync(async (req, res, next) => {
