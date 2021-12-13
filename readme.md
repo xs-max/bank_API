@@ -6,16 +6,17 @@
 
 # USER ROUTES
 
+CREATE ADMIN: Send a post request  to the "/api/users/createadmin" route. without a payload: password is "pass1234"
 
-CREATE User: Restricted to only the admin , Send a post request api to the "/api/users" route. with the following payloads ("fullName", "email","typeOfAccount" [savings or current],"phone","password","passwordConfirm")
+CREATE USER: Restricted to only the admin , Send a post request  to the "/api/users" route. with the following payloads ("fullName", "email","typeOfAccount" [savings or current],"phone","password","passwordConfirm")
 
 GET ALL Users: Restricted to only the admin, Send a get request to the "/api/users" route. features are available for filtering, limiting feilds, sorting and pagination.
 
-GET ONE BOOK: Restricted to only the admin, send a get request with the user's id as a parameter  to "/api/users/:id" route.
+GET ONE USER: Restricted to only the admin, send a get request with the user's id as a parameter  to "/api/users/:id" route.
 
 LOGIN : No restriction, send a post request with email and password as payload  to "/api/users/login" route. 
 
-DELETE User: Restricted to only the admin, send a delete request with the user's id as a parameter  to "/api/users/:id" route.
+DELETE USER: Restricted to only the admin, send a delete request with the user's id as a parameter  to "/api/users/:id" route.
 
 DISABLE USER: Restricted to only the admin, send a patch request with the user's id as a parameter  to "/api/users/:id/disable" route.
 
