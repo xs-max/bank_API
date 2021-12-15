@@ -32,7 +32,7 @@ exports.activateUser = catchAsync(async (req, res, next) => {
     if (!user) return next(new AppError("User does not exist", 404));
     const updatedUser = await User.findByIdAndUpdate(
       user._id,
-      { disable: false },
+      { disable: false }, 
       {
         new: true,
       }
